@@ -533,7 +533,6 @@ function changePage(page) {
     let p;
     if (page == "previous") p = currentPage - 1;
     if (page == "next") p = currentPage + 1;
-    console.log(p);
     if (!(p < 1 || p > data.length / 10)) changePage(p);
     return;
   }
@@ -542,32 +541,42 @@ function changePage(page) {
   currentPage = page;
   createTableBody(currentPage);
 }
-// var grid = document.createElement("div");
-// grid.className=""
-var gridContainer= document.createElement("div");
-gridContainer.className="grid-container";
+
+var gridContainer = document.createElement("div");
+gridContainer.className = "grid-container";
+var table = document.createElement("table");
+table.className = "grid-item";
+var thead = document.createElement("thead");
+let tr = document.createElement("tr");
+let td1 = document.createElement("td");
+let td2 = document.createElement("td");
+let td3 = document.createElement("td");
+td1.innerText = "id";
+td2.innerText = "name";
+td3.innerText = "email";
+tr.append(td1, td2, td3);
+thead.appendChild(tr);
+var tbody = document.createElement("tbody");
+
 function createTableBody(num) {
   var arr = data.slice(10 * num - 10, 10 * num);
-  console.log(arr); 
-  // var table=[];
-  // var gridContainer= document.createElement("div");
-  // gridContainer.className="grid-container";
-  gridContainer.innerHTML=[];
-  for(i=0;i<arr.length;i++){
-   var table= document.createElement("div");
-   table.className="grid-item";
-   table.innerText=arr[i].id+" "+arr[i].name+" "+arr[i].email;
-  //  var table= document.createElement("div");
-  //  table.className="grid-item";
-  //  var table= document.createElement("div");
-  //  table.className="grid-item";
-  //  gridContainer.appendChild(table);   
-  // gridContainer.appendChild(table);
+  tbody.innerHTML = "";
+  for (i = 0; i < arr.length; i++) {
+    let tr = document.createElement("tr");
+    let td1 = document.createElement("td");
+    let td2 = document.createElement("td");
+    let td3 = document.createElement("td");
+
+    td1.innerText = arr[i].id;
+    td2.innerText = arr[i].name;
+    td3.innerText = arr[i].email;
+    tr.append(td1, td2, td3);
+    tbody.appendChild(tr);
+  }
+  table.append(thead, tbody);
   gridContainer.appendChild(table);
 
-container.appendChild(gridContainer);
-  }
-  
+  container.appendChild(gridContainer);
   document.body.appendChild(table);
 }
 
